@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rick_morty_testapp/core/assets/app_colors.dart';
+import 'package:rick_morty_testapp/core/assets/app_textstyles.dart';
 import 'package:rick_morty_testapp/features/main_screen_feature/presentation/main_page.dart';
 
 class MainScreen extends StatelessWidget {
@@ -11,7 +13,9 @@ class MainScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           'Rick And Morty App',
+          style: AppTextstyles.w700Text25Black,
         ),
+        backgroundColor: AppColors.blueColor,
       ),
       body: const MainPage(),
     );
