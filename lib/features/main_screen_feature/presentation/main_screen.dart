@@ -17,7 +17,7 @@ class MainScreen extends StatelessWidget {
         ),
         backgroundColor: AppColors.blueColor,
       ),
-      body: const MainPage(),
+      body: MainPage(),
     );
   }
 }

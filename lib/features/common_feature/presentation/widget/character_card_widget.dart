@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:rick_morty_testapp/core/assets/app_colors.dart';
+import 'package:rick_morty_testapp/core/assets/app_textstyles.dart';
+import 'package:rick_morty_testapp/features/main_screen_feature/domain/entity/result_entity.dart';
 
 class CharacterCardWidget extends StatelessWidget {
   const CharacterCardWidget({
     super.key,
+    required this.resultEntity,
     required this.onTap,
     required this.isFavorite,
   });
+  final ResultEntity resultEntity;
   final bool isFavorite;
   final Function() onTap;
 
@@ -30,33 +34,75 @@ class CharacterCardWidget extends StatelessWidget {
                     width: double.infinity,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: Image.asset(
-                        'assets/mock_images/mock_image.png',
+                      child: Image.network(
+                        resultEntity.image,
                         fit: BoxFit.cover,
+                        loadingBuilder: (buildContext, widget, imageChunkEvent) {
+                          if (imageChunkEvent == null) {
+                            return widget;
+                          }
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        errorBuilder: (buildContext, object, stackTrace){
+                          return Container(
+                            color: AppColors.greyShade65,
+                          );
+                        },
                       ),
                     ),
                   ),
                 ),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
-                        'name',
+                        resultEntity.name,
                         overflow: TextOverflow.ellipsis,
+                        style: AppTextstyles.w700Text20Black,
                       ),
-                      Text(
-                        'name',
+                      RichText(
                         overflow: TextOverflow.ellipsis,
+                        text: TextSpan(children: [
+                          const TextSpan(
+                            text: 'Status: ',
+                            style: AppTextstyles.w300Text17Black,
+                          ),
+                          TextSpan(
+                            text: resultEntity.status,
+                            style: AppTextstyles.w300Text17Grey,
+                          ),
+                        ]),
                       ),
-                      Text(
-                        'name',
+                      RichText(
                         overflow: TextOverflow.ellipsis,
+                        text: TextSpan(children: [
+                          const TextSpan(
+                            text: 'Species: ',
+                            style: AppTextstyles.w300Text17Black,
+                          ),
+                          TextSpan(
+                            text: resultEntity.species,
+                            style: AppTextstyles.w300Text17Grey,
+                          ),
+                        ]),
                       ),
-                      Text(
-                        'name',
+                      RichText(
                         overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        text: TextSpan(children: [
+                          const TextSpan(
+                            text: 'Location: ',
+                            style: AppTextstyles.w300Text17Black,
+                          ),
+                          TextSpan(
+                            text: resultEntity.location.name,
+                            style: AppTextstyles.w300Text17Grey,
+                          ),
+                        ]),
                       ),
                     ],
                   ),
