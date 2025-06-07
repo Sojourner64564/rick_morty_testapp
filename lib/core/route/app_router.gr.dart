@@ -28,60 +28,60 @@ class BottomNavigationRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [FavoriteScreen]
-class FavoriteRoute extends PageRouteInfo<FavoriteRouteArgs> {
-  FavoriteRoute({Key? key, List<PageRouteInfo>? children})
-      : super(
-          FavoriteRoute.name,
-          args: FavoriteRouteArgs(key: key),
-          initialChildren: children,
-        );
+class FavoriteRoute extends PageRouteInfo<void> {
+  const FavoriteRoute({List<PageRouteInfo>? children})
+      : super(FavoriteRoute.name, initialChildren: children);
 
   static const String name = 'FavoriteRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<FavoriteRouteArgs>(
-        orElse: () => const FavoriteRouteArgs(),
-      );
-      return FavoriteScreen(key: args.key);
+      return const FavoriteScreen();
     },
   );
 }
 
-class FavoriteRouteArgs {
-  const FavoriteRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'FavoriteRouteArgs{key: $key}';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other is! FavoriteRouteArgs) return false;
-    return key == other.key;
-  }
-
-  @override
-  int get hashCode => key.hashCode;
-}
-
 /// generated route for
 /// [MainScreen]
-class MainRoute extends PageRouteInfo<void> {
-  const MainRoute({List<PageRouteInfo>? children})
-      : super(MainRoute.name, initialChildren: children);
+class MainRoute extends PageRouteInfo<MainRouteArgs> {
+  MainRoute({Key? key, List<PageRouteInfo>? children})
+      : super(
+          MainRoute.name,
+          args: MainRouteArgs(key: key),
+          initialChildren: children,
+        );
 
   static const String name = 'MainRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const MainScreen();
+      final args = data.argsAs<MainRouteArgs>(
+        orElse: () => const MainRouteArgs(),
+      );
+      return MainScreen(key: args.key);
     },
   );
+}
+
+class MainRouteArgs {
+  const MainRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'MainRouteArgs{key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! MainRouteArgs) return false;
+    return key == other.key;
+  }
+
+  @override
+  int get hashCode => key.hashCode;
 }

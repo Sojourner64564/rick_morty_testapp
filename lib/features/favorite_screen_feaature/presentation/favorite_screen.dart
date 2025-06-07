@@ -38,12 +38,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             children: [
               const Text(
                 'Favorites Characters',
-                style: AppTextstyles.w700Text25Black,
+                style: AppLightTextstyles.w700Text25,
               ),
               const SizedBox(height: 10),
               SearchBar(
                 hintText: 'Sort by Name',
                 controller: _controller,
+                backgroundColor: WidgetStatePropertyAll<Color>(Theme.of(context).colorScheme.secondary,),
+                elevation: const WidgetStatePropertyAll<double>(2),
                 onChanged: (String text){
                   sortedFavoritesCubit.sortCharacters(text);
                 },
@@ -66,7 +68,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               ),
             ],
           ),
-          backgroundColor: AppColors.blueColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
       ),
       body: FavoritePage(controller: _controller),

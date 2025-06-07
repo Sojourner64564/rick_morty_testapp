@@ -20,7 +20,7 @@ class FavoritePage extends StatelessWidget {
           return const Center(
             child: Text(
               'Initial',
-              style: AppTextstyles.w700Text20Black,
+              style: AppLightTextstyles.w700Text20,
             ),
           );
         }
@@ -28,7 +28,7 @@ class FavoritePage extends StatelessWidget {
           return const Center(
             child: Text(
               'Loading',
-              style: AppTextstyles.w700Text20Black,
+              style: AppLightTextstyles.w700Text20,
             ),
           );
         }
@@ -58,7 +58,7 @@ class FavoritePage extends StatelessWidget {
           return const Center(
             child: Text(
               'Empty Result',
-              style: AppTextstyles.w700Text20Black,
+              style: AppLightTextstyles.w700Text20,
             ),
           );
         }
@@ -66,14 +66,14 @@ class FavoritePage extends StatelessWidget {
           return const Center(
             child: Text(
               'Error',
-              style: AppTextstyles.w700Text20Black,
+              style: AppLightTextstyles.w700Text20,
             ),
           );
         }else{
           return const Center(
             child: Text(
               'Unexpected Error',
-              style: AppTextstyles.w700Text20Black,
+              style: AppLightTextstyles.w700Text20,
             ),
           );
         }

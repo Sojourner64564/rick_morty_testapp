@@ -13,7 +13,6 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i973;
-import 'package:rick_morty_testapp/features/main_screen_feature/presentation/controller/favorite_card_controller/favorite_card_controller.dart' as _i722;
 
 import '../../features/common_feature/data/remote_ds/retrofit_remote_client.dart'
     as _i198;
@@ -31,6 +30,8 @@ import '../../features/common_feature/domain/usecase/load_filtered_favorite_from
     as _i394;
 import '../../features/common_feature/domain/usecase/save_or_delete_prev_favorite_uc.dart'
     as _i625;
+import '../../features/common_feature/presentation/controller/theme_controller/theme_controller_cubit.dart'
+    as _i530;
 import '../../features/favorite_screen_feaature/presentation/sorted_favorites_cubit/sorted_favorites_cubit.dart'
     as _i15;
 import '../../features/main_screen_feature/data/repository_impl/fetch_cached_characters_repository_impl.dart'
@@ -51,9 +52,10 @@ import '../../features/main_screen_feature/domain/usecase/fetch_paginated_charac
     as _i1043;
 import '../../features/main_screen_feature/presentation/controller/favorite_button_controller/favorite_button_cubit.dart'
     as _i246;
+import '../../features/main_screen_feature/presentation/controller/favorite_card_controller/favorite_card_controller.dart'
+    as _i857;
 import '../../features/main_screen_feature/presentation/controller/fetch_characters_cubit/fetch_characters_cubit.dart'
     as _i860;
-
 import '../database/cache_database.dart' as _i614;
 import '../database/favorite_database.dart' as _i890;
 import '../network/internet_connection_checker.dart' as _i657;
@@ -80,6 +82,8 @@ _i174.GetIt $initGetIt(
   gh.lazySingleton<_i614.CacheDatabase>(() => _i614.CacheDatabase());
   gh.lazySingleton<_i890.FavoriteDatabase>(() => _i890.FavoriteDatabase());
   gh.lazySingleton<_i1007.AppRouter>(() => _i1007.AppRouter());
+  gh.lazySingleton<_i530.ThemeControllerCubit>(
+      () => _i530.ThemeControllerCubit());
   gh.lazySingleton<_i780.FetchCachedCharactersRepository>(() =>
       _i80.FetchCachedCharactersRepositoryImpl(gh<_i614.CacheDatabase>()));
   gh.lazySingleton<_i1060.DatabaseFavoriteRepository>(
@@ -119,8 +123,8 @@ _i174.GetIt $initGetIt(
             gh<_i198.RetrofitRemoteClientInstance>(),
             gh<_i932.NetworkInfo>(),
           ));
-  gh.lazySingleton<_i722.FavoriteCardController>(
-      () => _i722.FavoriteCardController(
+  gh.lazySingleton<_i857.FavoriteCardController>(
+      () => _i857.FavoriteCardController(
             gh<_i246.FavoriteButtonCubit>(),
             gh<_i15.SortedFavoritesCubit>(),
           ));

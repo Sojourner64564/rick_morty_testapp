@@ -19,7 +19,7 @@ class CharacterCardWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: AppColors.grey002,
+        color:Theme.of(context).colorScheme.primaryContainer,
       ),
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -47,7 +47,7 @@ class CharacterCardWidget extends StatelessWidget {
                         },
                         errorBuilder: (buildContext, object, stackTrace){
                           return Container(
-                            color: AppColors.greyShade65,
+                            color: AppLightColors.errorContainerColor,
                           );
                         },
                       ),
@@ -62,18 +62,18 @@ class CharacterCardWidget extends StatelessWidget {
                       Text(
                         resultEntity.name,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextstyles.w700Text20Black,
+                        style: AppLightTextstyles.w700Text20,
                       ),
                       RichText(
                         overflow: TextOverflow.ellipsis,
                         text: TextSpan(children: [
                           const TextSpan(
                             text: 'Status: ',
-                            style: AppTextstyles.w300Text17Black,
+                            style: AppLightTextstyles.w300Text17,
                           ),
                           TextSpan(
                             text: resultEntity.status,
-                            style: AppTextstyles.w300Text17Grey,
+                            style: AppLightTextstyles.w300Text17Grey,
                           ),
                         ]),
                       ),
@@ -82,11 +82,11 @@ class CharacterCardWidget extends StatelessWidget {
                         text: TextSpan(children: [
                           const TextSpan(
                             text: 'Species: ',
-                            style: AppTextstyles.w300Text17Black,
+                            style: AppLightTextstyles.w300Text17,
                           ),
                           TextSpan(
                             text: resultEntity.species,
-                            style: AppTextstyles.w300Text17Grey,
+                            style: AppLightTextstyles.w300Text17Grey,
                           ),
                         ]),
                       ),
@@ -96,11 +96,11 @@ class CharacterCardWidget extends StatelessWidget {
                         text: TextSpan(children: [
                           const TextSpan(
                             text: 'Location: ',
-                            style: AppTextstyles.w300Text17Black,
+                            style: AppLightTextstyles.w300Text17,
                           ),
                           TextSpan(
                             text: resultEntity.location.name,
-                            style: AppTextstyles.w300Text17Grey,
+                            style: AppLightTextstyles.w300Text17Grey,
 
                           ),
                         ]),
@@ -120,7 +120,7 @@ class CharacterCardWidget extends StatelessWidget {
                   iconSize: 30,
                   icon: const Icon(
                     Icons.star_border_outlined,
-                    color: AppColors.blackColor,
+                    color: AppLightColors.blackColor,
                   ),
                 ),
               ),
@@ -135,7 +135,7 @@ class CharacterCardWidget extends StatelessWidget {
                   iconSize: 30,
                   icon: const Icon(
                     Icons.star,
-                    color: AppColors.orange,
+                    color: AppLightColors.tertiaryColor,
                   ),
                 ),
               ),

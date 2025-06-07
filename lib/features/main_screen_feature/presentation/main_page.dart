@@ -53,7 +53,7 @@ class _MainPageState extends State<MainPage> {
             return const Center(
               child: Text(
                 'Initial',
-                style: AppTextstyles.w700Text20Black,
+                style: AppLightTextstyles.w700Text20,
               ),
             );
           }
@@ -61,7 +61,7 @@ class _MainPageState extends State<MainPage> {
             return const Center(
               child: Text(
                 'Loading',
-                style: AppTextstyles.w700Text20Black,
+                style: AppLightTextstyles.w700Text20,
               ),
             );
           }
@@ -102,7 +102,7 @@ class _MainPageState extends State<MainPage> {
             return const Center(
               child: Text(
                 'Cache Empty',
-                style: AppTextstyles.w700Text20Black,
+                style: AppLightTextstyles.w700Text20,
               ),
             );
           }
@@ -110,7 +110,7 @@ class _MainPageState extends State<MainPage> {
             return const Center(
               child: Text(
                 'Cache Error',
-                style: AppTextstyles.w700Text20Black,
+                style: AppLightTextstyles.w700Text20,
               ),
             );
           }
@@ -118,14 +118,14 @@ class _MainPageState extends State<MainPage> {
             return const Center(
               child: Text(
                 'Error',
-                style: AppTextstyles.w700Text20Black,
+                style: AppLightTextstyles.w700Text20,
               ),
             );
           } else {
             return const Center(
               child: Text(
                 'Unexpected error',
-                style: AppTextstyles.w700Text20Black,
+                style: AppLightTextstyles.w700Text20,
               ),
             );
           }

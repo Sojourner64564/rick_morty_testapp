@@ -12,14 +12,14 @@ class BottomNavigationScreen extends StatelessWidget {
     return AutoTabsScaffold(
       extendBody: true,
       routes: [
-        const MainRoute(),
-        FavoriteRoute(),
+        MainRoute(),
+        const FavoriteRoute(),
       ],
       animationDuration: const Duration(milliseconds: 150),
       bottomNavigationBuilder: (BuildContext context, TabsRouter tabRouter) {
         return BottomNavigationBar(
           elevation: 0,
-          backgroundColor: AppColors.blueColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           onTap: tabRouter.setActiveIndex,
           currentIndex: tabRouter.activeIndex,
           showSelectedLabels: false,
@@ -31,12 +31,12 @@ class BottomNavigationScreen extends StatelessWidget {
               icon: Icon(
                 Icons.paste_sharp,
                 size: 35,
-                color: AppColors.greyShade65,
+                color: AppLightColors.errorContainerColor,
               ),
               activeIcon: Icon(
                 Icons.paste_sharp,
                 size: 35,
-                color: AppColors.orange,
+                color: AppLightColors.tertiaryColor,
               ),
             ),
             BottomNavigationBarItem(
@@ -44,12 +44,12 @@ class BottomNavigationScreen extends StatelessWidget {
               icon: Icon(
                 Icons.rectangle_outlined,
                 size: 35,
-                color: AppColors.greyShade65,
+                color: AppLightColors.errorContainerColor,
               ),
               activeIcon: Icon(
                 Icons.rectangle_outlined,
                 size: 35,
-                color: AppColors.orange ,
+                color: AppLightColors.tertiaryColor ,
               ),
             ),
           ],
