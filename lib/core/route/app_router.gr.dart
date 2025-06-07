@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -13,10 +14,7 @@ part of 'app_router.dart';
 /// [BottomNavigationScreen]
 class BottomNavigationRoute extends PageRouteInfo<void> {
   const BottomNavigationRoute({List<PageRouteInfo>? children})
-      : super(
-          BottomNavigationRoute.name,
-          initialChildren: children,
-        );
+      : super(BottomNavigationRoute.name, initialChildren: children);
 
   static const String name = 'BottomNavigationRoute';
 
@@ -31,10 +29,8 @@ class BottomNavigationRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [FavoriteScreen]
 class FavoriteRoute extends PageRouteInfo<FavoriteRouteArgs> {
-  FavoriteRoute({
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
+  FavoriteRoute({Key? key, List<PageRouteInfo>? children})
+      : super(
           FavoriteRoute.name,
           args: FavoriteRouteArgs(key: key),
           initialChildren: children,
@@ -46,7 +42,8 @@ class FavoriteRoute extends PageRouteInfo<FavoriteRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<FavoriteRouteArgs>(
-          orElse: () => const FavoriteRouteArgs());
+        orElse: () => const FavoriteRouteArgs(),
+      );
       return FavoriteScreen(key: args.key);
     },
   );
@@ -61,16 +58,23 @@ class FavoriteRouteArgs {
   String toString() {
     return 'FavoriteRouteArgs{key: $key}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! FavoriteRouteArgs) return false;
+    return key == other.key;
+  }
+
+  @override
+  int get hashCode => key.hashCode;
 }
 
 /// generated route for
 /// [MainScreen]
 class MainRoute extends PageRouteInfo<void> {
   const MainRoute({List<PageRouteInfo>? children})
-      : super(
-          MainRoute.name,
-          initialChildren: children,
-        );
+      : super(MainRoute.name, initialChildren: children);
 
   static const String name = 'MainRoute';
 

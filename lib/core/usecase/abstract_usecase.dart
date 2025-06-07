@@ -1,4 +1,3 @@
-abstract class AbstractUC<Type>{
-  Future<Type> call();
-
+abstract class AbstractUsecase<Type, Data>{
+  Future<Type> call(Data data);
 }
