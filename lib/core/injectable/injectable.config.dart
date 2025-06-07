@@ -26,6 +26,7 @@ import '../../features/main_screen_feature/presentation/fetch_characters_cubit/f
 import '../network/internet_connection_checker.dart' as _i657;
 import '../network/network_info.dart' as _i932;
 import '../network/network_info_impl.dart' as _i865;
+import '../route/app_router.dart' as _i1007;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt $initGetIt(
@@ -43,6 +44,7 @@ _i174.GetIt $initGetIt(
       () => registerModuleConnectionChecker.internetConnection);
   gh.factory<_i198.RetrofitRemoteClientInstance>(
       () => _i198.RetrofitRemoteClientInstance());
+  gh.lazySingleton<_i1007.AppRouter>(() => _i1007.AppRouter());
   gh.lazySingleton<_i932.NetworkInfo>(
       () => _i865.NetworkInfoImpl(gh<_i973.InternetConnectionChecker>()));
   gh.lazySingleton<_i475.FetchCharactersRepository>(

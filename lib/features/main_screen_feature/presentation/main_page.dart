@@ -61,7 +61,7 @@ class _MainPageState extends State<MainPage> {
                 controller: scrollController,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.65,
+                  childAspectRatio: 0.63,
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   final result = fetchCharacterState.characterEntity.results[index];

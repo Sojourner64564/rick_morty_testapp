@@ -101,6 +101,7 @@ class CharacterCardWidget extends StatelessWidget {
                           TextSpan(
                             text: resultEntity.location.name,
                             style: AppTextstyles.w300Text17Grey,
+
                           ),
                         ]),
                       ),
@@ -119,6 +120,7 @@ class CharacterCardWidget extends StatelessWidget {
                   iconSize: 30,
                   icon: const Icon(
                     Icons.star_border_outlined,
+                    color: AppColors.blackColor,
                   ),
                 ),
               ),
@@ -133,6 +135,7 @@ class CharacterCardWidget extends StatelessWidget {
                   iconSize: 30,
                   icon: const Icon(
                     Icons.star,
+                    color: AppColors.orange,
                   ),
                 ),
               ),
