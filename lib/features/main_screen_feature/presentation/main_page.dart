@@ -17,14 +17,20 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final scrollController = ScrollController();
 
+  void _scrollListener(){
+    widget.fetchCharactersCubit.fetchPaginatedCharacters(scrollController.offset, scrollController.position.maxScrollExtent);
+  }
+
   @override
   void initState() {
     widget.fetchCharactersCubit.fetchCharacters();
+    scrollController.addListener(_scrollListener);
     super.initState();
   }
 
   @override
   void dispose() {
+    scrollController.removeListener(_scrollListener);
     scrollController.dispose();
     super.dispose();
   }

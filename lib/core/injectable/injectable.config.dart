@@ -30,6 +30,8 @@ import '../../features/main_screen_feature/domain/usecase/fetch_cached_character
     as _i317;
 import '../../features/main_screen_feature/domain/usecase/fetch_characters_uc.dart'
     as _i293;
+import '../../features/main_screen_feature/domain/usecase/fetch_paginated_characters_uc.dart'
+    as _i1043;
 import '../../features/main_screen_feature/presentation/fetch_characters_cubit/fetch_characters_cubit.dart'
     as _i714;
 import '../database/cache_database.dart' as _i614;
@@ -74,10 +76,13 @@ _i174.GetIt $initGetIt(
           ));
   gh.lazySingleton<_i293.FetchCharactersUC>(
       () => _i293.FetchCharactersUC(gh<_i475.FetchCharactersRepository>()));
+  gh.lazySingleton<_i1043.FetchPaginatedCharactersUC>(() =>
+      _i1043.FetchPaginatedCharactersUC(gh<_i475.FetchCharactersRepository>()));
   gh.lazySingleton<_i714.FetchCharactersCubit>(() => _i714.FetchCharactersCubit(
         gh<_i293.FetchCharactersUC>(),
         gh<_i440.CacheCharactersUC>(),
         gh<_i317.FetchCachedCharactersUc>(),
+        gh<_i1043.FetchPaginatedCharactersUC>(),
       ));
   return getIt;
 }

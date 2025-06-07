@@ -13,8 +13,14 @@ abstract class RetrofitRemoteClient {
 
   @GET(UrlLinks.fetchFirstCharacterPage)
   Future<CharacterModel> fetchCharacters();
-}
 
+
+  /// Ссылка полностью береться из JSON
+  @GET('{url}')
+  Future<CharacterModel> fetchPaginatedCharacters(
+    @Path('url') String url,
+      );
+}
 @injectable
 class RetrofitRemoteClientInstance {
   RetrofitRemoteClient client() {
