@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_morty_testapp/core/assets/app_textstyles.dart';
 import 'package:rick_morty_testapp/core/injectable/injectable.dart';
 import 'package:rick_morty_testapp/features/common_feature/presentation/widget/character_card_widget.dart';
-import 'package:rick_morty_testapp/features/main_screen_feature/presentation/fetch_characters_cubit/fetch_characters_cubit.dart';
+import 'package:rick_morty_testapp/features/main_screen_feature/presentation/controller/favorite_button_controller/favorite_button_cubit.dart';
+import 'package:rick_morty_testapp/features/main_screen_feature/presentation/controller/fetch_characters_cubit/fetch_characters_cubit.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({super.key});
 
   final fetchCharactersCubit = getIt<FetchCharactersCubit>();
+  final favoriteButtonCubit = getIt<FavoriteButtonCubit>();
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -73,12 +75,18 @@ class _MainPageState extends State<MainPage> {
                   final result = fetchCharacterState.characterEntity.results[index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CharacterCardWidget(
-                      resultEntity: result,
-                      onTap: () {
-
-                    },
-                      isFavorite: false,),
+                    child: BlocBuilder<FavoriteButtonCubit, List<int>>(
+                      bloc: widget.favoriteButtonCubit,
+                      builder: (context, favoriteButtonState) {
+                        return CharacterCardWidget(
+                          onTap: () {
+                            widget.favoriteButtonCubit.saveOrDeletePrevFavorite(result);
+                          },
+                          resultEntity: result,
+                          isFavorite:  favoriteButtonState.contains(result.id),
+                        );
+                      },
+                    ),
                   );
                 },
               ),
