@@ -4,8 +4,17 @@ import 'package:rick_morty_testapp/core/assets/app_colors.dart';
 import 'package:rick_morty_testapp/core/route/app_router.dart';
 
 @RoutePage()
-class BottomNavigationScreen extends StatelessWidget {
+class BottomNavigationScreen extends StatefulWidget {
   const BottomNavigationScreen({super.key});
+
+  final double paddingDouble = 15;
+
+  @override
+  State<BottomNavigationScreen> createState() => _BottomNavigationScreenState();
+}
+
+class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
+  double positionRightPadding = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -13,48 +22,57 @@ class BottomNavigationScreen extends StatelessWidget {
       extendBody: true,
       routes: [
         MainRoute(),
-        const FavoriteRoute(),
+        FavoriteRoute(),
       ],
       animationDuration: const Duration(milliseconds: 150),
       bottomNavigationBuilder: (BuildContext context, TabsRouter tabRouter) {
-        return BottomNavigationBar(
-          elevation: 0,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          onTap: tabRouter.setActiveIndex,
-          currentIndex: tabRouter.activeIndex,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-              label: '',
-              icon: Icon(
-                Icons.paste_sharp,
-                size: 35,
-                color: AppLightColors.errorContainerColor,
-              ),
-              activeIcon: Icon(
-                Icons.paste_sharp,
-                size: 35,
-                color: AppLightColors.tertiaryColor,
-              ),
+        return Padding(
+          padding: EdgeInsets.only(
+            left: widget.paddingDouble,
+            bottom: widget.paddingDouble,
+            right: widget.paddingDouble,
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: NavigationBar(
+
+              onDestinationSelected: tabRouter.setActiveIndex,
+              selectedIndex: tabRouter.activeIndex,
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              indicatorColor: Theme.of(context).colorScheme.scrim,
+              overlayColor: const WidgetStatePropertyAll<Color>(AppCommonColors.whiteColor30),
+              destinations: const [
+                NavigationDestination(
+                  selectedIcon: Icon(
+                    Icons.home,
+                    size: 35,
+                    color: AppLightColors.blackColor,
+                  ),
+                  icon: Icon(
+                    Icons.home,
+                    size: 35,
+                  ),
+                  label: 'Characters',
+                ),
+                NavigationDestination(
+                  selectedIcon: Icon(
+                    Icons.rectangle_outlined,
+                    size: 35,
+                    color: AppLightColors.blackColor,
+                  ),
+                  icon: Icon(
+                    Icons.rectangle_outlined,
+                    size: 35,
+                  ),
+                  label: 'Favorites',
+                ),
+              ],
             ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Icon(
-                Icons.rectangle_outlined,
-                size: 35,
-                color: AppLightColors.errorContainerColor,
-              ),
-              activeIcon: Icon(
-                Icons.rectangle_outlined,
-                size: 35,
-                color: AppLightColors.tertiaryColor ,
-              ),
-            ),
-          ],
+          ),
         );
       },
     );
   }
 }
+
+

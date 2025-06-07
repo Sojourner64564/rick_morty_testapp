@@ -1,6 +1,5 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:rick_morty_testapp/core/assets/app_colors.dart';
 import 'package:rick_morty_testapp/core/assets/app_textstyles.dart';
 import 'package:rick_morty_testapp/core/injectable/injectable.dart';
 import 'package:rick_morty_testapp/features/favorite_screen_feaature/presentation/favorite_page.dart';
@@ -9,7 +8,10 @@ import 'package:rick_morty_testapp/features/favorite_screen_feaature/presentatio
 
 @RoutePage()
 class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({super.key});
+  FavoriteScreen({super.key});
+
+  final sortedFavoritesCubit = getIt<SortedFavoritesCubit>();
+
 
   @override
   State<FavoriteScreen> createState() => _FavoriteScreenState();
@@ -18,7 +20,6 @@ class FavoriteScreen extends StatefulWidget {
 class _FavoriteScreenState extends State<FavoriteScreen> {
   final _controller = TextEditingController();
 
-  final sortedFavoritesCubit = getIt<SortedFavoritesCubit>();
 
   @override
   void dispose() {
@@ -47,7 +48,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 backgroundColor: WidgetStatePropertyAll<Color>(Theme.of(context).colorScheme.secondary,),
                 elevation: const WidgetStatePropertyAll<double>(2),
                 onChanged: (String text){
-                  sortedFavoritesCubit.sortCharacters(text);
+                  widget.sortedFavoritesCubit.sortCharacters(text);
                 },
                 leading: const Padding(
                   padding: EdgeInsets.only(left: 10),
@@ -60,7 +61,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   IconButton(
                     onPressed: (){
                     _controller.clear();
-                    sortedFavoritesCubit.loadCharactersWithoutFilter();
+                    widget.sortedFavoritesCubit.loadCharactersWithoutFilter();
                     },
                     icon: const Icon(Icons.close),
                 ),

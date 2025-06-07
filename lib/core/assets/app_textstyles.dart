@@ -13,11 +13,14 @@ class AppLightTextstyles{
 
   static const TextStyle w300Text17 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: 17,
+    fontSize: 16,
+
   );
   static const TextStyle w300Text17Grey = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: 17,
+    fontSize: 16,
+    color: Colors.grey,
+
   );
 }
 

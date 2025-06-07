@@ -19,7 +19,7 @@ class CharacterCardWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color:Theme.of(context).colorScheme.primaryContainer,
+        color: Theme.of(context).colorScheme.primaryContainer,
       ),
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -37,7 +37,8 @@ class CharacterCardWidget extends StatelessWidget {
                       child: Image.network(
                         resultEntity.image,
                         fit: BoxFit.cover,
-                        loadingBuilder: (buildContext, widget, imageChunkEvent) {
+                        loadingBuilder:
+                            (buildContext, widget, imageChunkEvent) {
                           if (imageChunkEvent == null) {
                             return widget;
                           }
@@ -45,7 +46,7 @@ class CharacterCardWidget extends StatelessWidget {
                             child: CircularProgressIndicator(),
                           );
                         },
-                        errorBuilder: (buildContext, object, stackTrace){
+                        errorBuilder: (buildContext, object, stackTrace) {
                           return Container(
                             color: AppLightColors.errorContainerColor,
                           );
@@ -64,7 +65,48 @@ class CharacterCardWidget extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppLightTextstyles.w700Text20,
                       ),
-                      RichText(
+                      Text.rich(
+                        maxLines: 1,
+                        TextSpan(children: [
+                          const TextSpan(
+                            text: 'Status: ',
+                            style: AppLightTextstyles.w300Text17,
+                          ),
+                          TextSpan(
+                            text: resultEntity.status,
+                            style: AppLightTextstyles.w300Text17Grey,
+                          ),
+                        ]),
+                      ),
+                      Text.rich(
+                        maxLines: 1,
+                        TextSpan(children: [
+                          const TextSpan(
+                            text: 'Species: ',
+                            style: AppLightTextstyles.w300Text17,
+                          ),
+                          TextSpan(
+                            text: resultEntity.species,
+                            style: AppLightTextstyles.w300Text17Grey,
+                          ),
+                        ]),
+                      ),
+                      Text.rich(
+                        maxLines: 2,
+                        TextSpan(
+                            children: [
+                          const TextSpan(
+                            text: 'Location: ',
+                            style: AppLightTextstyles.w300Text17,
+                          ),
+                          TextSpan(
+                            text: resultEntity.location.name,
+                            style: AppLightTextstyles.w300Text17Grey,
+                          ),
+                        ]),
+                      ),
+
+                   /*   RichText(
                         overflow: TextOverflow.ellipsis,
                         text: TextSpan(children: [
                           const TextSpan(
@@ -101,10 +143,10 @@ class CharacterCardWidget extends StatelessWidget {
                           TextSpan(
                             text: resultEntity.location.name,
                             style: AppLightTextstyles.w300Text17Grey,
-
                           ),
                         ]),
-                      ),
+                      ),*/
+
                     ],
                   ),
                 ),
