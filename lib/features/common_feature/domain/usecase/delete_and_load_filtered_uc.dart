@@ -4,8 +4,8 @@ import 'package:rick_morty_testapp/features/common_feature/domain/repository/dat
 import 'package:rick_morty_testapp/features/main_screen_feature/domain/entity/result_entity.dart';
 
 @lazySingleton
-class DeleteAndLoadFavoriteFromDbUC implements AbstractUsecase<List<ResultEntity>, DeleteAndLoadFavoriteFromDbParams>{
-  DeleteAndLoadFavoriteFromDbUC(this._databaseFavoriteRepository);
+class DeleteAndLoadFilteredFromDbUC implements AbstractUsecase<List<ResultEntity>, DeleteAndLoadFavoriteFromDbParams>{
+  DeleteAndLoadFilteredFromDbUC(this._databaseFavoriteRepository);
 
   final DatabaseFavoriteRepository _databaseFavoriteRepository;
 
@@ -20,5 +20,5 @@ class DeleteAndLoadFavoriteFromDbUC implements AbstractUsecase<List<ResultEntity
 class  DeleteAndLoadFavoriteFromDbParams{
   final String text;
   final int characterId;
-  DeleteAndLoadFavoriteFromDbParams(this.text, this.characterId);
+  DeleteAndLoadFavoriteFromDbParams({required this.text, required this.characterId});
 }

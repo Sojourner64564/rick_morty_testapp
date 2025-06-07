@@ -19,8 +19,8 @@ class SaveOrDeletePrevFavoriteUC implements AbstractUsecase<List<int>, ResultEnt
         overlapResultEntity.add(value);
       }
     });
-    overlapResultEntity.forEach((value){
-      _databaseFavoriteRepository.deleteFromDB(value.id);
+    overlapResultEntity.forEach((value) async{
+      await _databaseFavoriteRepository.deleteFromDB(value.id);
     });
     if(overlapResultEntity.isEmpty){
       await _databaseFavoriteRepository.saveToDB(resultEntity);
