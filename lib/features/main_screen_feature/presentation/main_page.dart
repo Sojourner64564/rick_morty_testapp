@@ -21,9 +21,10 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin {
+class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   final scrollController = ScrollController();
   late AnimationController firstAnimationController;
+  late AnimationController secondAnimationController;
 
   void _scrollListener(){
     widget.fetchCharactersCubit.fetchPaginatedCharacters(scrollController.offset, scrollController.position.maxScrollExtent);
@@ -32,7 +33,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
 
   @override
   void initState() {
-    firstAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 1000));
+    firstAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 5000));
 
     widget.fetchCharactersCubit.fetchCharacters();
     widget.favoriteButtonCubit.updateFavoriteButtons();
@@ -41,11 +42,15 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
     super.initState();
   }
 
-
+  void animate(){
+    firstAnimationController.reset();
+    firstAnimationController.forward();
+  }
 
   @override
   void dispose() {
     firstAnimationController.dispose();
+    secondAnimationController.dispose();
 
     scrollController.removeListener(_scrollListener);
     scrollController.dispose();
@@ -93,8 +98,9 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                   final result = fetchCharacterState.characterEntity.results[index];
 
                   return BlurAnimationWidget(
-                    controller: firstAnimationController,
-                      animateWidget: animateIndex == index,
+                    animationController: firstAnimationController,
+                    animateWidget: animateIndex == index,
+                      animateToRight: true,
                       hideWidget: hideWidget,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -107,8 +113,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                                   hideWidget = true;
                                   animateIndex = index;
                                 });
-                                firstAnimationController.reset();
-                                firstAnimationController.forward();
+                                animate();
                                 widget.favoriteCardController.saveFavoriteCard(result);
                               },
                               resultEntity: result,
@@ -159,3 +164,4 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
     );
   }
 }
+
