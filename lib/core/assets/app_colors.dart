@@ -6,7 +6,7 @@ class AppLightColors {
   static const primaryContainerColor = Color.fromRGBO(0, 0, 0, 0.02);
   static const errorContainerColor = Color.fromRGBO(0, 0, 0, 0.65);
   static const tertiaryColor = Color.fromRGBO(255, 87, 51, 1);
-  static const blackColor = Colors.black; //97, 97, 127
+  static const blackColor = Colors.black;
   static const bottomBarIndicatorColor = Colors.green;
 }
 
@@ -23,5 +23,4 @@ class AppDarkColors {
 
 class AppCommonColors{
   static const whiteColor30 = Colors.white30;
-
 }

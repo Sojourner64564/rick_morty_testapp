@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_morty_testapp/core/assets/app_textstyles.dart';
 import 'package:rick_morty_testapp/core/injectable/injectable.dart';
+import 'package:rick_morty_testapp/features/common_feature/presentation/widget/blur_animation_widget.dart';
 import 'package:rick_morty_testapp/features/common_feature/presentation/widget/character_card_widget.dart';
 import 'package:rick_morty_testapp/features/favorite_screen_feaature/presentation/sorted_favorites_cubit/sorted_favorites_cubit.dart';
 import 'package:rick_morty_testapp/features/main_screen_feature/presentation/controller/favorite_button_controller/favorite_button_cubit.dart';
@@ -20,15 +21,19 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin {
   final scrollController = ScrollController();
+  late AnimationController firstAnimationController;
 
   void _scrollListener(){
     widget.fetchCharactersCubit.fetchPaginatedCharacters(scrollController.offset, scrollController.position.maxScrollExtent);
   }
 
+
   @override
   void initState() {
+    firstAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 1000));
+
     widget.fetchCharactersCubit.fetchCharacters();
     widget.favoriteButtonCubit.updateFavoriteButtons();
     widget.sortedFavoritesCubit.loadCharactersWithoutFilter();
@@ -36,12 +41,19 @@ class _MainPageState extends State<MainPage> {
     super.initState();
   }
 
+
+
   @override
   void dispose() {
+    firstAnimationController.dispose();
+
     scrollController.removeListener(_scrollListener);
     scrollController.dispose();
     super.dispose();
   }
+
+  int animateIndex = -1;
+  bool hideWidget = false;
 
   @override
   Widget build(BuildContext context) {
@@ -79,20 +91,33 @@ class _MainPageState extends State<MainPage> {
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   final result = fetchCharacterState.characterEntity.results[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BlocBuilder<FavoriteButtonCubit, List<int>>(
-                      bloc: widget.favoriteButtonCubit,
-                      builder: (context, favoriteButtonState) {
-                        return CharacterCardWidget(
-                          onTap: () {
-                            widget.favoriteCardController.saveFavoriteCard(result);
+
+                  return BlurAnimationWidget(
+                    controller: firstAnimationController,
+                      animateWidget: animateIndex == index,
+                      hideWidget: hideWidget,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: BlocBuilder<FavoriteButtonCubit, List<int>>(
+                          bloc: widget.favoriteButtonCubit,
+                          builder: (context, favoriteButtonState) {
+                            return CharacterCardWidget(
+                              onTap: () {
+                                setState(() {
+                                  hideWidget = true;
+                                  animateIndex = index;
+                                });
+                                firstAnimationController.reset();
+                                firstAnimationController.forward();
+                                widget.favoriteCardController.saveFavoriteCard(result);
+                              },
+                              resultEntity: result,
+                              isFavorite:  favoriteButtonState.contains(result.id),
+                            );
                           },
-                          resultEntity: result,
-                          isFavorite:  favoriteButtonState.contains(result.id),
-                        );
-                      },
-                    ),
+                        ),
+                      ),
+
                   );
                 },
               ),
