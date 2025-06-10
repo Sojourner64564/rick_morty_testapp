@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_morty_testapp/core/assets/app_textstyles.dart';
 import 'package:rick_morty_testapp/core/injectable/injectable.dart';
+import 'package:rick_morty_testapp/features/common_feature/presentation/controller/blur_animation_controller/blur_animation_controller_cubit.dart';
 import 'package:rick_morty_testapp/features/common_feature/presentation/widget/blur_animation_widget.dart';
 import 'package:rick_morty_testapp/features/common_feature/presentation/widget/character_card_widget.dart';
 import 'package:rick_morty_testapp/features/favorite_screen_feaature/presentation/sorted_favorites_cubit/sorted_favorites_cubit.dart';
@@ -16,6 +17,7 @@ class MainPage extends StatefulWidget {
   final favoriteButtonCubit = getIt<FavoriteButtonCubit>();
   final sortedFavoritesCubit = getIt<SortedFavoritesCubit>();
   final favoriteCardController = getIt<FavoriteCardController>();
+  final blurAnimationControllerCubit = getIt<BlurAnimationControllerCubit>();
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -24,16 +26,16 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   final scrollController = ScrollController();
   late AnimationController firstAnimationController;
-  late AnimationController secondAnimationController;
 
-  void _scrollListener(){
-    widget.fetchCharactersCubit.fetchPaginatedCharacters(scrollController.offset, scrollController.position.maxScrollExtent);
+  void _scrollListener() {
+    widget.fetchCharactersCubit.fetchPaginatedCharacters(
+        scrollController.offset, scrollController.position.maxScrollExtent);
   }
-
 
   @override
   void initState() {
-    firstAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 5000));
+    firstAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1400));
 
     widget.fetchCharactersCubit.fetchCharacters();
     widget.favoriteButtonCubit.updateFavoriteButtons();
@@ -42,22 +44,14 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     super.initState();
   }
 
-  void animate(){
-    firstAnimationController.reset();
-    firstAnimationController.forward();
-  }
-
   @override
   void dispose() {
     firstAnimationController.dispose();
-    secondAnimationController.dispose();
-
     scrollController.removeListener(_scrollListener);
     scrollController.dispose();
     super.dispose();
   }
 
-  int animateIndex = -1;
   bool hideWidget = false;
 
   @override
@@ -84,45 +78,54 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           }
           if (fetchCharacterState is FetchCharactersStateLoaded) {
             return RefreshIndicator(
-              onRefresh: () async{
+              onRefresh: () async {
                 widget.fetchCharactersCubit.fetchCharacters();
               },
               child: GridView.builder(
                 itemCount: fetchCharacterState.characterEntity.results.length,
-                controller: scrollController,
+                controller: scrollController, //
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 0.63,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  final result = fetchCharacterState.characterEntity.results[index];
+                  final result =
+                      fetchCharacterState.characterEntity.results[index];
 
-                  return BlurAnimationWidget(
-                    animationController: firstAnimationController,
-                    animateWidget: animateIndex == index,
-                      animateToRight: true,
-                      hideWidget: hideWidget,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: BlocBuilder<FavoriteButtonCubit, List<int>>(
-                          bloc: widget.favoriteButtonCubit,
-                          builder: (context, favoriteButtonState) {
-                            return CharacterCardWidget(
-                              onTap: () {
-                                setState(() {
-                                  hideWidget = true;
-                                  animateIndex = index;
-                                });
-                                animate();
-                                widget.favoriteCardController.saveFavoriteCard(result);
-                              },
-                              resultEntity: result,
-                              isFavorite:  favoriteButtonState.contains(result.id),
-                            );
-                          },
+                  return BlocBuilder<BlurAnimationControllerCubit, int>(
+                    bloc: widget.blurAnimationControllerCubit,
+                    builder: (context, blueAnimationState) {
+
+                      return BlurAnimationWidget(
+                        animationController: firstAnimationController,
+                        animateWidget: blueAnimationState == index,
+                        animateToRight: true,
+                        edgeInsetsGeometry: const EdgeInsets.all(8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: BlocBuilder<FavoriteButtonCubit, List<int>>(
+                            bloc: widget.favoriteButtonCubit,
+                            builder: (context, favoriteButtonState) {
+                              return CharacterCardWidget(
+                                onTap: () {
+                                  widget.blurAnimationControllerCubit.updateWidget(
+                                    index,
+                                    firstAnimationController,
+                                    favoriteButtonState.contains(result.id),
+                                  );
+
+                                  widget.favoriteCardController
+                                      .saveFavoriteCard(result);
+                                },
+                                resultEntity: result,
+                                isFavorite:
+                                    favoriteButtonState.contains(result.id),
+                              );
+                            },
+                          ),
                         ),
-                      ),
-
+                      );
+                    },
                   );
                 },
               ),
@@ -164,4 +167,3 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     );
   }
 }
-

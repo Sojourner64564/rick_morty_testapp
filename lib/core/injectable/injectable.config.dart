@@ -30,6 +30,8 @@ import '../../features/common_feature/domain/usecase/load_filtered_favorite_from
     as _i394;
 import '../../features/common_feature/domain/usecase/save_or_delete_prev_favorite_uc.dart'
     as _i625;
+import '../../features/common_feature/presentation/controller/blur_animation_controller/blur_animation_controller_cubit.dart'
+    as _i990;
 import '../../features/common_feature/presentation/controller/theme_controller/theme_controller_cubit.dart'
     as _i530;
 import '../../features/favorite_screen_feaature/presentation/sorted_favorites_cubit/sorted_favorites_cubit.dart'
@@ -84,6 +86,8 @@ _i174.GetIt $initGetIt(
   gh.lazySingleton<_i1007.AppRouter>(() => _i1007.AppRouter());
   gh.lazySingleton<_i530.ThemeControllerCubit>(
       () => _i530.ThemeControllerCubit());
+  gh.lazySingleton<_i990.BlurAnimationControllerCubit>(
+      () => _i990.BlurAnimationControllerCubit());
   gh.lazySingleton<_i780.FetchCachedCharactersRepository>(() =>
       _i80.FetchCachedCharactersRepositoryImpl(gh<_i614.CacheDatabase>()));
   gh.lazySingleton<_i1060.DatabaseFavoriteRepository>(
