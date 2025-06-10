@@ -14,6 +14,5 @@ class BlurAnimationControllerCubit extends Cubit<int> {
     emit(index);
     controller.reset();
     controller.forward();
-
   }
 }

@@ -108,7 +108,6 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                         animationController: firstAnimationController,
                         animateWidget: blueAnimationState == index,
                         animateToRight: true,
-                        hideWidget: hideWidget,
                         edgeInsetsGeometry: const EdgeInsets.all(8.0),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -117,7 +116,6 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                             builder: (context, favoriteButtonState) {
                               return CharacterCardWidget(
                                 onTap: () {
-                                  hideWidget = true;
                                   widget.blurAnimationControllerCubit.updateWidget(
                                     index,
                                     firstAnimationController,

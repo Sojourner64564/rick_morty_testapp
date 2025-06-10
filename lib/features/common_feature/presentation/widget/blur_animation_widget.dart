@@ -9,7 +9,6 @@ class BlurAnimationWidget extends StatefulWidget {
     super.key,
     required this.animateWidget,
     required this.animationController,
-    required this.hideWidget,
     required this.edgeInsetsGeometry,
     this.animateToRight,
     this.animateToLeft,
@@ -21,7 +20,6 @@ class BlurAnimationWidget extends StatefulWidget {
   final AnimationController animationController;
   final bool? animateToRight;
   final bool? animateToLeft;
-  final bool hideWidget;
   final EdgeInsetsGeometry edgeInsetsGeometry;
 
   @override
