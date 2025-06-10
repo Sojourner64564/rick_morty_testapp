@@ -44,22 +44,14 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     super.initState();
   }
 
-  void animate(bool isNeedToAnimate) {
-    if (!isNeedToAnimate) return;
-    firstAnimationController.reset();
-    firstAnimationController.forward();
-  }
-
   @override
   void dispose() {
     firstAnimationController.dispose();
-
     scrollController.removeListener(_scrollListener);
     scrollController.dispose();
     super.dispose();
   }
 
-  //int animateIndex = -1;
   bool hideWidget = false;
 
   @override
