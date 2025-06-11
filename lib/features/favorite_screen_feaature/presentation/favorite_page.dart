@@ -11,10 +11,10 @@ class FavoritePage extends StatefulWidget {
   FavoritePage({
     required this.textEditingController,
   });
+  final GlobalKey<AnimatedGridState> gridKey = GlobalKey();
 
   final TextEditingController textEditingController;
   final sortedFavoritesCubit = getIt<SortedFavoritesCubit>();
-  late AnimationController animationController;
 
   @override
   State<FavoritePage> createState() => _FavoritePageState();
@@ -22,13 +22,14 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage>
     with SingleTickerProviderStateMixin {
-  final GlobalKey<AnimatedGridState> gridKey = GlobalKey();
+  late AnimationController animationController;
 
 
   @override
   void initState() {
     print('initState');
-    widget.animationController = AnimationController(
+    isInitStateComplete = true;
+    animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
     );
@@ -36,22 +37,24 @@ class _FavoritePageState extends State<FavoritePage>
   }
 
   void _flipCard() {
-    if ( widget.animationController.status == AnimationStatus.completed) {
-      widget.animationController.reverse();
+    if ( animationController.status == AnimationStatus.completed) {
+      animationController.reverse();
     } else {
-      widget.animationController.forward();
+      animationController.forward();
     }
   }
 
   bool isDeleting = false;
   int indexOfAnimatedGrid = 0;
+  bool isInitStateComplete = false;
 
   @override
   void dispose() {
     print('dispose');
-    widget.animationController.dispose();
+    animationController.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,40 +84,68 @@ class _FavoritePageState extends State<FavoritePage>
 
           return Column(
             children: [
-              IconButton(onPressed: (){
-                setState(() {
-                  widget.sortedFavoritesCubit.loadCharactersWithoutFilter();
-
-                });
-              }, icon: Icon(Icons.update)),
+              Row(
+                children: [
+                  IconButton(onPressed: (){
+                    widget.sortedFavoritesCubit.loadCharactersWithoutFilter();
+                    //widget.sortedFavoritesCubit.sortCharacters('mo');
+                   // widget.sortedFavoritesCubit.test1();
+                      //widget.gridKey.currentState?.insertItem(2);
+                  }, icon: Icon(Icons.ac_unit),
+                  ),
+                  IconButton(onPressed: (){
+                    //widget.sortedFavoritesCubit.sortCharacters('mo');
+                     widget.sortedFavoritesCubit.test1();
+                    //gridKey.currentState?.insertItem(2);
+                  }, icon: Icon(Icons.update),
+                  ),
+                  IconButton(onPressed: (){
+                    //widget.sortedFavoritesCubit.sortCharacters('mo');
+                    widget.sortedFavoritesCubit.test2();
+                    //gridKey.currentState?.insertItem(2);
+                  }, icon: Icon(Icons.abc_rounded),
+                  ),
+                  IconButton(onPressed: (){
+                    widget.sortedFavoritesCubit.sortCharacters('');
+                    //widget.sortedFavoritesCubit.test2();
+                    //gridKey.currentState?.insertItem(2);
+                  }, icon: Icon(Icons.access_time_rounded),
+                  ),
+                  IconButton(onPressed: (){
+                    widget.sortedFavoritesCubit.sortCharacters('mo');
+                    //widget.sortedFavoritesCubit.test2();
+                    //gridKey.currentState?.insertItem(2);
+                  }, icon: Icon(Icons.access_time_rounded),
+                  ),
+                  IconButton(onPressed: (){
+                    widget.sortedFavoritesCubit.sortCharacters('s');
+                    //widget.sortedFavoritesCubit.test2();
+                    //gridKey.currentState?.insertItem(2);
+                  }, icon: Icon(Icons.access_time_rounded),
+                  ),
+                ],
+              ),
               Expanded(
                 child: AnimatedGrid(
-                  key: gridKey,
+                  key: widget.gridKey,
                   initialItemCount: state.resultEntityList.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 0.63,
                   ),
                   itemBuilder: (context, index, animation) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if(!isDeleting){
-                          print('deleting');
-                          if (gridKey.currentState != null) {
-                            print('gridKey.currentState != null');
-                            if(state.resultEntityList.length == index+1){
-                              print('state.resultEntityList.length == index');
-                              setState(() {
-                                gridKey.currentState?.insertItem(index+1);
-                                isDeleting = false;
-                              });
-                            }
-                          }
-                        }
-                    });
+                    indexOfAnimatedGrid = state.resultEntityList.length;
+                    if(isInitStateComplete){
+                      if(!isDeleting){
+                        // gridKey.currentState?.insertItem(indexOfAnimatedGrid-1);
+                      }
+                    }
+
 
                     print('gridTile $index');
                     print('lenght of state ${state.resultEntityList.length}');
                     final result = state.resultEntityList[index];
+
                     return ScaleTransition(
                       scale: animation,
                       child: Padding(
@@ -124,18 +155,21 @@ class _FavoritePageState extends State<FavoritePage>
                           isFavorite: true,
                           onTap: () {
                               isDeleting = true;
-                             _flipCard();
-                              gridKey.currentState?.removeItem(index,
+                             //_flipCard();
+                              widget.gridKey.currentState?.removeItem(index,
                                 duration: const Duration(seconds: 1),
                                     (context, animation) {
+                                return Container(
+                                    color: Colors.yellow
+                                );
                                   return MatrixTransition(
-                                    animation:  widget.animationController,
+                                    animation:  animationController,
                                     onTransform: (double value) {
                                       return Matrix4.identity()..setEntry(3, 2, 0.001)
                                         ..rotateY(pi * value);
                                     },
                                     child: ValueListenableBuilder<double>(
-                                      valueListenable:  widget.animationController,
+                                      valueListenable:  animationController,
                                       builder: (context, value, child) {
                                         final showFront = (value * pi) < pi / 2;
                                         return Stack(

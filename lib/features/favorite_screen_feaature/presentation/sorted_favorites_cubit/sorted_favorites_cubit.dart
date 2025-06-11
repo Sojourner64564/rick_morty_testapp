@@ -26,6 +26,9 @@ class SortedFavoritesCubit extends Cubit<SortedFavoritesState> {
       if(entity.isEmpty) {
         emit(SortedFavoritesStateLoadedEmpty());
       }else{
+        for(final item in entity){
+          print('damn name is: ${item.name}');
+        }
         emit(SortedFavoritesStateLoaded(entity));
       }
     }).onError<Failure>((error, stackTrace){
@@ -39,9 +42,11 @@ class SortedFavoritesCubit extends Cubit<SortedFavoritesState> {
       if(entity.isEmpty) {
         emit(SortedFavoritesStateLoadedEmpty());
       }else{
-        print('emit state');
-        print(entity);
-        emit(SortedFavoritesStateLoaded(entity));
+        for(final item in entity){
+          print('damn name is: ${item.name}');
+        }
+
+          emit(SortedFavoritesStateLoaded(entity));
       }
     }).onError<Failure>((error, stackTrace){
       emit(SortedFavoritesStateError());
@@ -64,5 +69,31 @@ class SortedFavoritesCubit extends Cubit<SortedFavoritesState> {
     });
   }
 
+  Future<void> test1() async{
+    final List<ResultEntity> listResult = [
+      ResultEntity(
+        name: 'Name1'
+      ),
+      ResultEntity(
+          name: 'Name2'
+      ),
+      ResultEntity(
+          name: 'Name3'
+      ),
+      ResultEntity(
+          name: 'Name4'
+      ),
+    ];
+    emit(SortedFavoritesStateLoaded(listResult));
+  }
 
+  Future<void> test2() async{
+    final List<ResultEntity> listResult = [
+      ResultEntity(
+          name: 'Name1'
+      ),
+
+    ];
+    emit(SortedFavoritesStateLoaded(listResult));
+  }
 }

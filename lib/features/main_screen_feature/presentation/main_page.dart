@@ -114,6 +114,8 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                                     favoriteButtonState.contains(result.id),
                                   );
 
+
+
                                   widget.favoriteCardController
                                       .saveFavoriteCard(result);
                                 },
