@@ -72,7 +72,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
       ),
-      body: FavoritePage(controller: _controller),
+      body: FavoritePage(
+          controller: _controller,
+      ),
     );
   }
 }
