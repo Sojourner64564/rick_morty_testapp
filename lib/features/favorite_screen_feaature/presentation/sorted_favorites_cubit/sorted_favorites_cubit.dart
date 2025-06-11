@@ -39,6 +39,8 @@ class SortedFavoritesCubit extends Cubit<SortedFavoritesState> {
       if(entity.isEmpty) {
         emit(SortedFavoritesStateLoadedEmpty());
       }else{
+        print('emit state');
+        print(entity);
         emit(SortedFavoritesStateLoaded(entity));
       }
     }).onError<Failure>((error, stackTrace){

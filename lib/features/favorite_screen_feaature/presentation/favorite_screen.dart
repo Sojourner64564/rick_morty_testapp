@@ -73,7 +73,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         ),
       ),
       body: FavoritePage(
-          controller: _controller,
+          textEditingController: _controller,
       ),
     );
   }
